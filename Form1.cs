@@ -212,7 +212,7 @@ namespace Delta_PLC_Tool
         {
             try
             {
-                foreach (string recdata in _blockingDataCollection_1.GetConsumingEnumerable())
+                foreach (string recdata in _blockingDataCollection_1_22.GetConsumingEnumerable())
                 {
                     str_Function_2 = str_IO_status_2 = str_XY_2 = "";
                     str_Function_2 = recdata.Substring(3, 2);
@@ -472,6 +472,12 @@ namespace Delta_PLC_Tool
             }
         }
 
+
+        private readonly BlockingCollection<byte[]> _blockingDataCollection_22 = new BlockingCollection<byte[]>();
+        private readonly BlockingCollection<string> _blockingDataCollection_1_22 = new BlockingCollection<string>();
+        private List<byte> bufferlist_2 = new List<byte>();
+        private readonly object lock_bufferlist_2 = new object();
+        private List<byte> tempList_2 = new List<byte>();
         private void Port_DataReceived_2(object sender, SerialDataReceivedEventArgs e)
         {
             try
@@ -482,27 +488,27 @@ namespace Delta_PLC_Tool
                 byte[] recdata = null;
 
 
-                lock (lock_bufferlist)
+                lock (lock_bufferlist_2)
                 {
-                    if (bufferlist.Count > 3000)
+                    if (bufferlist_2.Count > 3000)
                     {
                         Console.WriteLine("仪表数据一直未被成功解析，数据移除");
                         StringBuilder sb = new StringBuilder();
                         foreach (byte b in bufferlist) sb.Append(string.Format("0x{0},", b.ToString("X2")));
                         Console.WriteLine("获取未被解析的数据" + sb);
-                        bufferlist.Clear();
+                        bufferlist_2.Clear();
                         port_2.DiscardInBuffer();
                     }
-                    bufferlist.AddRange(buf);
-                    recdata = GetData(ref bufferlist);
+                    bufferlist_2.AddRange(buf);
+                    recdata = GetData(ref bufferlist_2);
                     string Recmsg = System.Text.Encoding.UTF8.GetString(recdata);
-                    SysLog.Info(string.Format("Rec:{0}", Recmsg));
+                    SysLog.Info(string.Format("Rec_2:{0}", Recmsg));
                     if (Recmsg.Contains(":") && Recmsg.Contains("\r\n"))
                     {
                         string temp = Recmsg.Substring(Recmsg.IndexOf(":"));
                         int endIndex = temp.IndexOf("\r\n");
                         temp = temp.Substring(0, endIndex);
-                        _blockingDataCollection_1.Add(temp);
+                        _blockingDataCollection_1_22.Add(temp);
                     }
                     else
                     {
@@ -519,6 +525,7 @@ namespace Delta_PLC_Tool
         }
 
         bool isX = true;
+        bool isX_2 = true;
         int PLC_Count = 1; //命令发送次数
 
         int CheckSocket = 1;
@@ -562,15 +569,15 @@ namespace Delta_PLC_Tool
                     SysLog.Info("PLC发送命令次数：" + PLC_Count);
                     return;
                 }
-                if (isX)
+                if (isX_2)
                 {
                     by = new byte[] { 0x3A, 0x30, 0x31, 0x30, 0x32, 0x30, 0x34, 0x30, 0x30, 0x30, 0x30, 0x31, 0x30, 0x45, 0x39, 0x0D, 0x0A };  //X 0~10
-                    isX = false;
+                    isX_2 = false;
                 }
                 else
                 {
                     by = new byte[] { 0x3A, 0x30, 0x31, 0x30, 0x32, 0x30, 0x35, 0x30, 0x30, 0x30, 0x30, 0x30, 0x38, 0x46, 0x30, 0x0D, 0x0A };  //Y 0~8
-                    isX = true;
+                    isX_2 = true;
                 }
 
             }
@@ -907,7 +914,6 @@ namespace Delta_PLC_Tool
 
                     cmbPort_2.Enabled = false;
                     btn_OpenCom_2.Enabled = false;
-                    //Aotu_PD();//开启皮带秤转动
                     Thread.Sleep(50);
 
                     if(!timer1.Enabled)
@@ -918,8 +924,8 @@ namespace Delta_PLC_Tool
                     msg = ex.Source + ex.Message;
                     if (port_2.IsOpen) port_2.Close();
                     MessageBox.Show(string.Format("串口{0},打开失败，请检查！", port_2.PortName));
-                    port.Dispose();
-                    port = null;
+                    port_2.Dispose();
+                    port_2 = null;
                 }
             }
         }
@@ -971,7 +977,7 @@ namespace Delta_PLC_Tool
                     
             }
             string cmd = System.Text.Encoding.UTF8.GetString(by);
-            SysLog.Info(string.Format("开启皮带秤:{0}", cmd));
+            SysLog.Info(string.Format("开启控制器:{0}", cmd));
         }
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
@@ -982,7 +988,7 @@ namespace Delta_PLC_Tool
             {
                 timer1.Stop();
             }
-            SysLog.Info(string.Format("关闭程序，关闭皮带秤"));
+            SysLog.Info(string.Format("关闭程序，关闭控制器"));
 
             if (port.IsOpen)
             {
@@ -993,6 +999,19 @@ namespace Delta_PLC_Tool
                 portWrite(by);
                 Thread.Sleep(50);
                 portWrite(by);
+                Output_0.BackColor = SystemColors.Window;
+
+            }
+
+            if (port_2.IsOpen)
+            {
+                /*string str = "ABC123456";
+                        port.Write(str);*/
+                Thread.Sleep(50);
+                by_2 = new byte[] { 0x3A, 0x30, 0x31, 0x30, 0x35, 0x30, 0x35, 0x30, 0x30, 0x30, 0x30, 0x30, 0x30, 0x46, 0x35, 0x0D, 0x0A };
+                portWrite_2(by_2);
+                Thread.Sleep(50);
+                portWrite_2(by_2);
                 Output_0.BackColor = SystemColors.Window;
 
             }

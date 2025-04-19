@@ -129,7 +129,7 @@ namespace Delta_PLC_Tool
             // 
             // btnSave
             // 
-            this.btnSave.Location = new System.Drawing.Point(294, 21);
+            this.btnSave.Location = new System.Drawing.Point(309, 21);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(73, 34);
             this.btnSave.TabIndex = 21;
@@ -152,12 +152,12 @@ namespace Delta_PLC_Tool
             this.cmbPort.FormattingEnabled = true;
             this.cmbPort.Location = new System.Drawing.Point(47, 27);
             this.cmbPort.Name = "cmbPort";
-            this.cmbPort.Size = new System.Drawing.Size(58, 24);
+            this.cmbPort.Size = new System.Drawing.Size(83, 24);
             this.cmbPort.TabIndex = 9;
             // 
             // btn_CloseCom
             // 
-            this.btn_CloseCom.Location = new System.Drawing.Point(212, 21);
+            this.btn_CloseCom.Location = new System.Drawing.Point(227, 21);
             this.btn_CloseCom.Name = "btn_CloseCom";
             this.btn_CloseCom.Size = new System.Drawing.Size(63, 34);
             this.btn_CloseCom.TabIndex = 15;
@@ -167,7 +167,7 @@ namespace Delta_PLC_Tool
             // 
             // btn_OpenCom
             // 
-            this.btn_OpenCom.Location = new System.Drawing.Point(122, 21);
+            this.btn_OpenCom.Location = new System.Drawing.Point(137, 21);
             this.btn_OpenCom.Name = "btn_OpenCom";
             this.btn_OpenCom.Size = new System.Drawing.Size(70, 34);
             this.btn_OpenCom.TabIndex = 14;
@@ -771,7 +771,7 @@ namespace Delta_PLC_Tool
             // 
             // btnSave_2
             // 
-            this.btnSave_2.Location = new System.Drawing.Point(294, 21);
+            this.btnSave_2.Location = new System.Drawing.Point(318, 21);
             this.btnSave_2.Name = "btnSave_2";
             this.btnSave_2.Size = new System.Drawing.Size(73, 34);
             this.btnSave_2.TabIndex = 21;
@@ -794,12 +794,12 @@ namespace Delta_PLC_Tool
             this.cmbPort_2.FormattingEnabled = true;
             this.cmbPort_2.Location = new System.Drawing.Point(47, 27);
             this.cmbPort_2.Name = "cmbPort_2";
-            this.cmbPort_2.Size = new System.Drawing.Size(58, 27);
+            this.cmbPort_2.Size = new System.Drawing.Size(93, 27);
             this.cmbPort_2.TabIndex = 9;
             // 
             // btn_CloseCom_2
             // 
-            this.btn_CloseCom_2.Location = new System.Drawing.Point(212, 21);
+            this.btn_CloseCom_2.Location = new System.Drawing.Point(236, 21);
             this.btn_CloseCom_2.Name = "btn_CloseCom_2";
             this.btn_CloseCom_2.Size = new System.Drawing.Size(66, 34);
             this.btn_CloseCom_2.TabIndex = 15;
@@ -809,7 +809,7 @@ namespace Delta_PLC_Tool
             // 
             // btn_OpenCom_2
             // 
-            this.btn_OpenCom_2.Location = new System.Drawing.Point(122, 21);
+            this.btn_OpenCom_2.Location = new System.Drawing.Point(146, 21);
             this.btn_OpenCom_2.Name = "btn_OpenCom_2";
             this.btn_OpenCom_2.Size = new System.Drawing.Size(66, 34);
             this.btn_OpenCom_2.TabIndex = 14;
